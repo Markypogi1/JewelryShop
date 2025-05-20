@@ -1,0 +1,36 @@
+<body>
+    <div class="container">
+      <aside class="logo">
+        <img src="assets/Images/logo.png" alt="logo">
+        <h1>Jewelry Shop</h1>
+      </aside>
+      <main class="login-form">
+        <h2>Welcome Back</h2>
+        <p>Please log in with your username and password</p>
+        <form id="loginForm" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+          <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Username" required>
+          </div>
+        
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Password" required>
+          </div>
+        
+          <div *ngIf="errorMessage" style="color: red; margin-bottom: 10px;">{{ errorMessage }}</div>
+        
+          <div class="options">
+            <label>
+              <input type="checkbox" (click)="togglePassword()"> Show Password
+            </label>
+          </div>
+        
+          <button type="submit" class="btn-primary">Log in</button>
+        </form>
+        
+        <p class="signup-text">Don't have an account? <a routerLink="/signup">Sign Up</a></p>
+        
+      </main>
+    </div>
+  </body>

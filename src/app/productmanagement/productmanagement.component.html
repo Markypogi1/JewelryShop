@@ -1,0 +1,172 @@
+<head>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<header class="top-header">
+  <div class="contact-info">
+    <p>
+      <a href="https://maps.app.goo.gl/2keN2KZkTRCKCYmF6">🗺️ Kawit, Medellin, Cebu</a> |
+      <a href="mailto:clarencesimoran1@gmail.com">📧 JewelryShop&#64;gmail.com</a> |
+      <a href="tel:+639945240377">📞 +63 994 524 0377</a>
+    </p>
+  </div>
+  <a routerLink="/contactus" class="contact-btn">CONTACT US</a>
+</header>
+
+<nav class="main-nav">
+  <div class="logo">
+    <a routerLink="/">
+      <img src="assets/Images/logo.png" alt="JewelryShopLogo" style="height:80px;">
+    </a>
+  </div>
+  <div class="NAVIGATION">
+    <ul class="nav-links">
+      <li><a routerLink="/homepage" style="margin-left: 90px;">HOME</a></li>
+      <li><a routerLink="/aboutus">ABOUT US</a></li>
+      <li><a routerLink="/services">SERVICES</a></li>
+      <li class="shop-dropdown">
+        <a routerLink="#">SHOP</a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/rings">Rings</a></li>
+          <li><a routerLink="/necklace">Necklaces</a></li>
+          <li><a routerLink="/earring">Earrings</a></li>
+          <li><a routerLink="/bracelet">Bracelet</a></li>
+        </ul>
+      </li>
+      <li class="shop-dropdown">
+        <a routerLink="/orders">ORDERS</a>
+        <ul class="dropdown-menu">
+          <li><a href="#">TO PAY</a></li>
+          <li><a href="#">TO SHIP</a></li>
+          <li><a href="#">TO RECEIVE</a></li>
+          <li><a href="#">COMPLETE</a></li>
+          <li><a href="#">CANCELLED</a></li>
+        </ul>
+      </li>
+      <li *ngIf="isAdmin"><a routerLink="/product-management">PRODUCT MANAGEMENT</a></li>
+       <li *ngIf="isAdmin">{{ currentUser?.username }}</li>
+                        
+            </ul>
+        </div>
+    
+
+</nav>
+
+  <div class="product-management">
+    <header>
+      <h1>Product Management</h1>
+    </header>
+
+    <!-- Product List -->
+<section class="products-section">
+  <h2>Product List</h2>
+  <table id="productTable">
+    <thead>
+      <tr>
+        <th>Select</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products" (click)="onProductSelect(product)">
+        <td>
+          <input type="radio" name="selectedProduct" [checked]="selectedProduct?.id === product.id">
+        </td>
+        <td>
+          <img [src]="product.product_image" alt="Product image" width="100" height="100">
+        </td>
+        <td>{{ product.product_name }}</td>
+        <td>{{ product.description }}</td>
+        <td>₱{{ product.price }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.category }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Add/Edit Product Form -->
+<section class="form-section">
+  <h2>{{ selectedProduct ? 'Edit' : 'Add' }} Product</h2>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="image">Product Image:</label>
+      <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*">
+      <img [src]="imagePreview" alt="Image preview" class="image-preview" *ngIf="imagePreview">
+    </div>
+
+    <div class="form-group">
+      <label for="product_name">Product Name:</label>
+      <input type="text" id="product_name" formControlName="product_name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" formControlName="description" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" id="price" formControlName="price" step="0.01" required>
+    </div>
+
+    <div class="form-group">
+      <label for="stock">Stock:</label>
+      <input type="number" id="stock" formControlName="stock" required>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category:</label>
+      <select id="category" formControlName="category" required>
+        <option value="Rings">Rings</option>
+        <option value="Necklaces">Necklaces</option>
+        <option value="Earrings">Earrings</option>
+        <option value="Bracelets">Bracelets</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" [disabled]="!productForm.valid">
+        {{ selectedProduct ? 'Update' : 'Add' }} Product
+      </button>
+      <button type="button" (click)="onDelete()" *ngIf="selectedProduct" class="delete-btn">
+        Delete Product
+      </button>
+      <button type="button" (click)="resetForm()" class="reset-btn">
+        Reset Form
+      </button>
+    </div>
+  </form>
+</section>
+
+  <footer>
+    <div class="about-header">
+      <p>©2025 JEWELRY ONLINE SHOP</p>
+      <div class="social-media">
+        <a href="https://web.facebook.com/profile.php?id=61571209926881" target="_blank"><i class="fab fa-facebook-square"></i></a>
+        <a href="https://x.com/ClarenceSi6699" target="_blank"><i class="fab fa-twitter-square"></i></a>
+        <a href="mailto:jewelryshop@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="https://t.me/+nUcNF89YdY1kODY1" target="_blank"><i class="fab fa-telegram"></i></a>
+      </div>
+    </div>
+
+    <div class="myaccount" *ngIf="currentUser">
+      <div id="accountInfo" [style.display]="showAccountInfo ? 'block' : 'none'" style="margin-top: 5px;">
+        <a href="/account">MY ACCOUNT</a><br><br>
+        <a href="javascript:void(0);" (click)="logout()">LOGOUT</a>
+      </div>
+      <a href="javascript:void(0);" (click)="toggleAccountInfo()">
+        <img src="assets/Images/user.png" alt="myaccount" style="height: 30px;">
+      </a>
+    </div>
+
+    <button class="TOP" (click)="scrollToTop()">&#8593;</button>
+  </footer>
+
+  

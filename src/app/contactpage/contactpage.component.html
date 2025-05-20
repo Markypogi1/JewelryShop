@@ -1,0 +1,144 @@
+<head>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<header class="top-header">
+  <div class="contact-info">
+    <p>
+      <a href="https://maps.app.goo.gl/2keN2KZkTRCKCYmF6">🗺️ Kawit, Medellin, Cebu</a> |
+      <a href="mailto:clarencesimoran1@gmail.com">📧 JewelryShop&#64;gmail.com</a> |
+      <a href="tel:+639945240377">📞 +63 994 524 0377</a>
+    </p>
+  </div>
+  <a routerLink="/contactus" class="contact-btn">CONTACT US</a>
+</header>
+
+<nav class="main-nav">
+  <div class="logo">
+    <a routerLink="/">
+      <img src="assets/Images/logo.png" alt="JewelryShopLogo" style="height:80px;">
+    </a>
+  </div>
+  <div class="NAVIGATION">
+    <ul class="nav-links">
+      <li><a routerLink="/homepage" style="margin-left: 90px;">HOME</a></li>
+      <li><a routerLink="/aboutus">ABOUT US</a></li>
+      <li><a routerLink="/services">SERVICES</a></li>
+      <li class="shop-dropdown">
+        <a routerLink="#">SHOP</a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/rings">Rings</a></li>
+          <li><a routerLink="/necklace">Necklaces</a></li>
+          <li><a routerLink="/earring">Earrings</a></li>
+          <li><a routerLink="/bracelet">Bracelet</a></li>
+        </ul>
+      </li>
+      
+      <li *ngIf="isAdmin"><a routerlink="/product-management">PRODUCT MANAGEMENT</a></li>
+      <li *ngIf="isAdmin">{{ currentUser?.username }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="currentUser" class="user-actions">
+    <p style="margin-right: 10px;">Hi, {{ currentUser.fullname.split(' ')[0] }}!</p>
+    <div class="cart">
+      <p id="cartItemCount">0</p>
+      <a routerLink="/addtocart">
+        <img src="assets/Images/add to cart.png" alt="addtocart" style="height: 30px;">
+      </a>
+    </div>
+  </div>
+
+  <div *ngIf="!currentUser" class="user-actions">
+    <a routerLink="/login" id="loginRegisterLink">LOGIN / REGISTER</a>
+    <div class="cart">
+      <p id="cartItemCount">0</p>
+      <a routerLink="/addtocart">
+        <img src="assets/Images/add to cart.png" alt="addtocart" style="height: 30px;">
+      </a>
+    </div>
+  </div>
+</nav>
+<div class="containercontact">
+  <div class="contact-section">
+    <h2>Contact Us</h2>
+    <img src="assets/Images/logo.png" alt="Jewelry Shop Logo">
+    <p>Feel free to reach out to us for further details and inquiries. We're here to help.</p>
+     <div class="info">
+      <img src="assets/Images/Phonecall.png" alt="Phone">
+      <a href="tel:+639945240377">0994 524 0377</a>
+    </div>
+    
+    <div class="info">
+      <img src="assets/Images/email.png" alt="Email">
+      <a href="mailto:clarencesimoran1@gmail.com">JewelryShop&#64;gmail.com</a>
+    </div>
+
+    <div class="social-icons">
+      <a href="https://web.facebook.com/profile.php?id=61571209926881&_rdc=1&_rdr#" target="_blank">
+        <img src="assets/Images/Facebook.png" alt="Facebook">
+      </a>
+      <a href="https://t.me/+nUcNF89YdY1kODY1" target="_blank">
+        <img src="assets/Images/telegram.png" alt="Telegram">
+      </a>
+      <a href="https://x.com/ClarenceSi6699" target="_blank">
+        <img src="assets/Images/x.jpg" alt="Twitter">
+      </a>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h2>Send Us a Quick Message</h2>
+    <p>Fields marked with an * are required</p>
+    
+    <form action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="0e8f5bb6-9bcd-4003-af60-d376f0a05493">
+      <div class="form-group">
+        <label for="name">Complete Name: *</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Contact No: *</label>
+        <input type="tel" id="contact" name="contact" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email: *</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="message">How can we help you? *</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="about-header">
+    <p>©2025 JEWELRY ONLINE SHOP</p>
+    <div class="social-media">
+      <a href="https://web.facebook.com/profile.php?id=61571209926881" target="_blank"><i class="fab fa-facebook-square"></i></a>
+      <a href="https://x.com/ClarenceSi6699" target="_blank"><i class="fab fa-twitter-square"></i></a>
+      <a href="mailto:jewelryshop@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://t.me/+nUcNF89YdY1kODY1" target="_blank"><i class="fab fa-telegram"></i></a>
+    </div>
+  </div>
+
+  <div class="myaccount" *ngIf="currentUser">
+    <div id="accountInfo" [style.display]="showAccountInfo ? 'block' : 'none'" style="margin-top: 5px;">
+      <a href="/account">MY ACCOUNT</a><br><br>
+      <a href="javascript:void(0);" (click)="logout()">LOGOUT</a>
+    </div>
+    <a href="javascript:void(0);" (click)="toggleAccountInfo()">
+      <img src="assets/Images/user.png" alt="myaccount" style="height: 30px;">
+    </a>
+  </div>
+
+  <button class="TOP" (click)="scrollToTop()">&#8593;</button>
+</footer>

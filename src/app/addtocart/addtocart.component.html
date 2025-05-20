@@ -1,0 +1,144 @@
+<head>
+  <title>Shopping Items</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="shopping-cart">
+    <header>
+      <img src="assets/Images/logo.png" alt="Logo" class="logo" />
+      <div class="user-actions"></div>
+      <nav>
+        <ul>
+          <li><span class="step active">1</span> Shopping Cart</li>
+          <li><span class="step">2</span> Order Complete</li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="cart-items">
+        <table>
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cart">
+              <td>
+                <input
+                  type="checkbox"
+                  [checked]="selectedItems.has(item.id)"
+                  (change)="toggleSelection(item.id)"
+                />
+              </td>
+              <td>
+                <img
+                  [src]="item.product_image"
+                  alt="{{ item.product_name }}"
+                  width="60"
+                />
+                <br />
+                {{ item.product_name }}
+              </td>
+              <td>₱{{ item.price }}</td>
+              <td>
+                <input
+                  type="number"
+                  [(ngModel)]="item.quantity"
+                  (change)="updateQuantity(item, item.quantity)"
+                  min="1"
+                  [max]="item.stock || 99"
+                />
+              </td>
+              <td>₱{{ item.price * item.quantity }}</td>
+              <td>
+                <button class="remove" (click)="removeItem(item.id)">Remove</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="continue-shopping" [routerLink]="'/rings'">← Continue Shopping</button>
+      </section>
+
+      <section class="cart-totals">
+        <h2>Cart Totals</h2>
+        <hr /><br />
+        <div class="subtotal">
+          <span>Subtotal</span>
+          <span>₱{{ cartSubtotal }}</span>
+        </div>
+        <hr />
+
+        <div id="delivery-details" class="delivery-details">
+          <h3>Enter Your Delivery Details</h3>
+          <input type="text" id="fullname" placeholder="Full Name" required />
+          <input type="text" id="contactnumber" placeholder="Contact Number" required />
+          <p id="contact-error" style="color: red; font-size: 14px; margin-top: 5px"></p>
+          <input type="text" id="zipcode" placeholder="Zipcode" required />
+          <p id="zipcode-error" style="color: red; font-size: 14px; margin-top: 5px"></p>
+          <input type="text" id="street" placeholder="Street" required />
+          <input type="text" id="barangay" placeholder="Barangay" required />
+          <input type="text" id="municipality" placeholder="Municipality" required />
+          <input type="text" id="province" placeholder="Province" required />
+        </div>
+
+        <br />
+        <div class="shipping">
+          <span>Delivery Fee:</span>
+          <span>₱{{ deliveryFee }}</span>
+        </div>
+        <br />
+        <div class="shipping">
+          <span>Payment Method</span>
+          <br />
+          <div class="shipping-methods">
+            <br />
+            <label><input type="radio" name="shipping" value="COD" checked /> <span class="cash-on-delivery">Cash on Delivery</span></label>
+          </div>
+          <br />
+        </div>
+
+        <div class="total">
+          <span>Total</span>
+          <span>₱{{ cartTotal }}</span>
+        </div>
+        <button class="proceed-to-checkout" (click)="placeOrder()">Place Order</button>
+        <br />
+        <div class="error-message" style="display: none; color: red">
+          You must select at least one item to proceed to checkout.
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+
+<footer>
+  <div class="about-header">
+    <p>©2025 JEWELRY ONLINE SHOP</p>
+    <div class="social-media">
+      <a href="https://web.facebook.com/profile.php?id=61571209926881" target="_blank"><i class="fab fa-facebook-square"></i></a>
+      <a href="https://x.com/ClarenceSi6699" target="_blank"><i class="fab fa-twitter-square"></i></a>
+      <a href="mailto:jewelryshop@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://t.me/+nUcNF89YdY1kODY1" target="_blank"><i class="fab fa-telegram"></i></a>
+    </div>
+  </div>
+
+  <div class="myaccount" *ngIf="currentUser">
+    <div id="accountInfo" [style.display]="showAccountInfo ? 'block' : 'none'" style="margin-top: 5px">
+      <a href="/account">MY ACCOUNT</a><br /><br />
+      <a href="javascript:void(0);" (click)="logout()">LOGOUT</a>
+    </div>
+    <a href="javascript:void(0);" (click)="toggleAccountInfo()">
+      <img src="assets/Images/user.png" alt="myaccount" style="height: 30px" />
+    </a>
+  </div>
+
+  <button class="TOP" (click)="scrollToTop()">&#8593;</button>
+</footer>

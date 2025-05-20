@@ -1,0 +1,124 @@
+<head>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<header class="top-header">
+  <div class="contact-info">
+    <p>
+      <a href="https://maps.app.goo.gl/2keN2KZkTRCKCYmF6">🗺️ Kawit, Medellin, Cebu</a> |
+      <a href="mailto:clarencesimoran1@gmail.com">📧 JewelryShop&#64;gmail.com</a> |
+      <a href="tel:+639945240377">📞 +63 994 524 0377</a>
+    </p>
+  </div>
+  <a routerLink="/contactus" class="contact-btn">CONTACT US</a>
+</header>
+
+<nav class="main-nav">
+  <div class="logo">
+    <a routerLink="/">
+      <img src="assets/Images/logo.png" alt="JewelryShopLogo" style="height:80px;">
+    </a>
+  </div>
+  <div class="NAVIGATION">
+    <ul class="nav-links">
+      <li><a routerLink="/homepage" style="margin-left: 90px;">HOME</a></li>
+      <li><a routerLink="/aboutus">ABOUT US</a></li>
+      <li><a routerLink="/services">SERVICES</a></li>
+      <li class="shop-dropdown">
+        <a routerLink="#">SHOP</a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/rings">Rings</a></li>
+          <li><a routerLink="/necklace">Necklaces</a></li>
+          <li><a routerLink="/earring">Earrings</a></li>
+          <li><a routerLink="/bracelet">Bracelet</a></li>
+        </ul>
+      </li>
+      
+      <li *ngIf="isAdmin"><a href="/product-management">PRODUCT MANAGEMENT</a></li>
+      <li *ngIf="isAdmin">{{ currentUser?.username }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="currentUser" class="user-actions">
+    <p style="margin-right: 10px;">Hi, {{ currentUser.fullname.split(' ')[0] }}!</p>
+    <div class="cart">
+      <p id="cartItemCount">0</p>
+      <a routerLink="/addtocart">
+        <img src="assets/Images/add to cart.png" alt="addtocart" style="height: 30px;">
+      </a>
+    </div>
+  </div>
+
+  <div *ngIf="!currentUser" class="user-actions">
+    <a routerLink="/login" id="loginRegisterLink">LOGIN / REGISTER</a>
+    <div class="cart">
+      <p id="cartItemCount">0</p>
+      <a routerLink="/addtocart">
+        <img src="assets/Images/add to cart.png" alt="addtocart" style="height: 30px;">
+      </a>
+    </div>
+  </div>
+</nav>
+
+<section class="services-section">
+  <h1>Our Services</h1>
+  <div class="image-container">
+    <img src="assets/Images/Groupi.jpg" alt="Group Photo">
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="icon">
+        <img src="assets/Images/Custom Jewelry Design.jpeg" alt="Custom Jewelry Design">
+      </div>
+      <h3>Custom Jewelry Design</h3>
+      <p>
+        Bring your dream jewelry to life with our custom design service. Whether it’s a unique engagement ring, a special gift, or a personal keepsake, our team will work with you to create a piece that reflects your vision and style.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">
+        <img src="assets/Images/Jewelry Care & Maintenance.jpeg" alt="Jewelry Care & Maintenance">
+      </div>
+      <h3>Jewelry Care & Maintenance</h3>
+      <p>
+        Keep your jewelry shining like new! We offer professional cleaning, polishing, and repair services to ensure your treasured pieces stay in perfect condition for years to come.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">
+        <img src="assets/Images/Gift Wrapping & Personalization.jpeg" alt="Gift Wrapping & Personalization">
+      </div>
+      <h3>Gift Wrapping & Personalization</h3>
+      <p>
+        Make your gifts unforgettable with our elegant packaging and personalized message options. Perfect for anniversaries, birthdays, and every special occasion in between.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="about-header">
+    <p>©2025 JEWELRY ONLINE SHOP</p>
+    <div class="social-media">
+      <a href="https://web.facebook.com/profile.php?id=61571209926881" target="_blank"><i class="fab fa-facebook-square"></i></a>
+      <a href="https://x.com/ClarenceSi6699" target="_blank"><i class="fab fa-twitter-square"></i></a>
+      <a href="mailto:jewelryshop@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://t.me/+nUcNF89YdY1kODY1" target="_blank"><i class="fab fa-telegram"></i></a>
+    </div>
+  </div>
+
+  <div class="myaccount" *ngIf="currentUser">
+    <div id="accountInfo" [style.display]="showAccountInfo ? 'block' : 'none'" style="margin-top: 5px;">
+      <a href="/account">MY ACCOUNT</a><br><br>
+      <a href="javascript:void(0);" (click)="logout()">LOGOUT</a>
+    </div>
+    <a href="javascript:void(0);" (click)="toggleAccountInfo()">
+      <img src="assets/Images/user.png" alt="myaccount" style="height: 30px;">
+    </a>
+  </div>
+
+  <button class="TOP" (click)="scrollToTop()">&#8593;</button>
+</footer>
